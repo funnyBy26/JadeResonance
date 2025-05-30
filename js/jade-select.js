@@ -24,11 +24,18 @@ onDocumentReady(() => {
 function initJadeSelectPage() {
     // 获取标题元素
     const typingTitle = document.getElementById("typing-title");
+    const titleContainer = document.getElementById("titleContainer");
+    
+    // 确保标题初始状态为居中
+    titleContainer.classList.add('centered');
     
     // 开始标题动画
     setTimeout(() => {
         typingTitle.style.opacity = "1";
-        typeWriterWithCursor(typingTitle, titleText, 100, showCarouselContent);
+        typeWriterWithCursor(typingTitle, titleText, 100, () => {
+            // 打字完成后，延迟一段时间再开始平移
+            setTimeout(moveTitleToTop, 1200);
+        });
     }, 800);
     
     // 初始化轮播导航
@@ -57,16 +64,26 @@ function typeWriterWithCursor(element, text, speed, callback) {
             // 打字效果完成后，开始闪烁光标
             cursorElement.classList.add('blink');
             
-            // 如果有回调函数，延迟执行
+            // 如果有回调函数，执行
             if (callback) {
-                setTimeout(() => {
-                    callback();
-                }, 800); // 增加延迟，给用户更多时间看到完整文本和闪烁光标
+                callback();
             }
         }
     }
     
     type();
+}
+
+// 将标题平移到顶部
+function moveTitleToTop() {
+    const titleContainer = document.getElementById("titleContainer");
+    
+    // 移除居中类并添加顶部对齐类
+    titleContainer.classList.remove('centered');
+    titleContainer.classList.add('top-aligned');
+    
+    // 等待标题平移完成后，显示轮播内容
+    setTimeout(showCarouselContent, 1300);
 }
 
 // 显示轮播内容
