@@ -1,0 +1,177 @@
+/* 玉石选择页面样式 */
+body {
+    background-image: url('../assets/images/background/jade-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+    color: #fff;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+.title-container {
+    margin-top: 50px;
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+.main-title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    min-height: 80px;
+}
+
+.section {
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #fff, transparent);
+}
+
+.jade-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.jade-card {
+    width: 220px;
+    height: 280px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.5s ease;
+}
+
+.jade-card:hover {
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.jade-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
+
+.jade-image.hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.jade-card:hover .jade-image.default {
+    opacity: 0;
+}
+
+.jade-card:hover .jade-image.hover {
+    opacity: 1;
+}
+
+.jade-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-size: 1.1rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.jade-card:hover .jade-name {
+    transform: translateY(0);
+}
+
+/* 响应式样式 */
+@media (max-width: 1024px) {
+    .jade-container {
+        gap: 20px;
+    }
+    
+    .jade-card {
+        width: 200px;
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .jade-card {
+        width: 180px;
+        height: 220px;
+    }
+}
+
+@media (max-width: 576px) {
+    .jade-container {
+        gap: 15px;
+    }
+    
+    .jade-card {
+        width: 150px;
+        height: 180px;
+    }
+    
+    .jade-name {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+}
