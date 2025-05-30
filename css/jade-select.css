@@ -11,7 +11,7 @@ body {
     padding: 50px 20px;
     color: #fff;
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 body::before {
@@ -27,8 +27,10 @@ body::before {
 
 .title-container {
     margin-top: 50px;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
     text-align: center;
+    width: 90%;
+    max-width: 1000px;
 }
 
 .main-title {
@@ -40,15 +42,140 @@ body::before {
     min-height: 80px;
 }
 
-.section {
-    width: 100%;
+/* 轮播容器 */
+.carousel-container {
+    position: relative;
+    width: 90%;
     max-width: 1200px;
-    margin-bottom: 60px;
+    height: 550px;
+    margin: 0 auto;
+    overflow: visible;
+    transition: opacity 1s ease, visibility 1s; /* 添加过渡效果 */
+}
+
+.carousel-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s ease;
+}
+
+/* 轮播切换时间 */
+.carousel-item {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s;
+    padding: 0 20px 40px; /* 增加底部内边距 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carousel-item.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 轮播导航按钮 */
+.carousel-nav {
+    position: absolute;
+    width: 110%; /* 扩大宽度确保按钮可见 */
+    left: -5%; /* 向左偏移以保持居中 */
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+    pointer-events: none; /* 使整体不响应鼠标事件 */
+}
+
+.carousel-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: all 0.3s ease;
+    position: relative;
+    pointer-events: auto; /* 单独启用按钮的鼠标事件 */
+}
+
+.carousel-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.prev-btn {
+    margin-left: -25px;
+}
+
+.next-btn {
+    margin-right: -25px;
+}
+
+/* 导航按钮提示 */
+.nav-hint {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: white;
+    white-space: nowrap;
+    top: 55px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.prev-btn .nav-hint {
+    left: 0;
+}
+
+.next-btn .nav-hint {
+    right: 0;
+}
+
+.carousel-btn:hover .nav-hint {
+    opacity: 1;
+}
+
+/* 轮播指示器 */
+.carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background-color: white;
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 .section-title {
     font-size: 1.8rem;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     text-align: center;
     font-weight: 400;
     letter-spacing: 2px;
@@ -73,6 +200,8 @@ body::before {
     justify-content: center;
     flex-wrap: wrap;
     gap: 30px;
+    width: 100%;
+    margin-bottom: 40px; /* 添加底部边距 */
 }
 
 .jade-card {
@@ -173,5 +302,32 @@ body::before {
     .jade-name {
         padding: 8px;
         font-size: 0.9rem;
+    }
+    
+    .carousel-nav {
+        top: auto;
+        bottom: 60px;
+    }
+}
+/* 光标样式 */
+.cursor {
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+    margin-left: 2px;
+    position: relative;
+    opacity: 1;
+}
+
+.cursor.blink {
+    animation: cursorBlink 1s infinite;
+}
+
+@keyframes cursorBlink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
     }
 }
