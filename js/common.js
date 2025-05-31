@@ -4,10 +4,10 @@
 
 // 页面加载后执行的函数
 function onDocumentReady(callback) {
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", callback);
-    } else {
+    if (document.readyState !== 'loading') {
         callback();
+    } else {
+        document.addEventListener('DOMContentLoaded', callback);
     }
 }
 

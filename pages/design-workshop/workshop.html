@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设计创意工坊</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/workshop.css">
+    <link rel="stylesheet" href="../../css/buttons.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>唤醒沉睡的玉魄，定制你的专属玉器</h1>
+            <p>用文字勾勒你的灵感：
+                <br>
+                时代风格："唐代华丽 / 汉代古朴 / 现代极简…"
+                <br>
+                纹饰主题："龙凤呈祥 / 山水意境 / 几何抽象…"
+                <br>
+                特殊需求："想要镶嵌金丝 / 希望呈现冰裂纹…"</p>
+        </div>
+
+        
+        <div id="loading-container">
+            <img id="loading-image" src="../../assets/images/loading.png">
+            <p>玉匠精灵正在雕刻...</p>
+        </div>
+
+        <div class="gallery" id="imageGallery">
+            <!-- 生成的图片将在这里显示 -->
+        </div>
+
+        <div class="input-section">
+            <textarea 
+                class="input-area" 
+                placeholder="请详细描述你想要的设计创意，例：宋代风格的青玉笔洗，表面雕刻竹林七贤图案"
+            ></textarea>
+            <div class="button _3" onclick="generateImage()"> <span>生成设计图</span>
+                <div class="back"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/common.js"></script>
+    <script src="../../js/workshop.js"></script>
+</body>
+</html>
