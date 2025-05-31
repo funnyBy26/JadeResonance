@@ -1,6 +1,6 @@
 /* 博物馆首页样式 */
 body {
-    background-image: url('../assets/images/museum-bg.jpg');
+    background-image: url('../assets/images/background/museum-bg.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
