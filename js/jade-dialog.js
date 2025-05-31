@@ -1,11 +1,19 @@
+let systemPrompt = ""
 document.addEventListener('DOMContentLoaded', function() {
-    const jadeId = getJadeIdFromUrl();
-    loadJadeData(jadeId);
+    // Load API configuration first
+    loadAPIConfig().then(() => {
+        const jadeId = getJadeIdFromUrl();
+        loadJadeData(jadeId);
 
-    const sendButton = document.getElementById('send-button');
-    const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const messageInput = document.getElementById('message-input');
 
-    sendButton.addEventListener('click', sendMessage);
+        sendButton.addEventListener('click', sendMessage);
+    }).catch(error => {
+        console.error("Failed to load API config:", error);
+        // Show error to user
+        alert("Failed to load API configuration. Please try again later.");
+    });
 });
 
 function getJadeIdFromUrl() {
@@ -22,12 +30,13 @@ async function loadJadeData(jadeId) {
         console.log("Jade data loaded:", jade); // Debugging statement
 
         // Set jade data
+        document.getElementById('jade-video').querySelector('source').src = jade.videoSrc;
+        document.getElementById('jade-video').load(); // Important to load the new source
         document.getElementById('jade-image').src = jade.imageSrc;
-        document.getElementById('jade-avatar').src = jade.imageSrc; // Changed ID here
         document.getElementById('jade-name').textContent = jade.name;
         document.getElementById('jade-character').textContent = jade.character;
         document.getElementById('jade-character-description').textContent = jade.characteristics;
-        document.getElementById('jade-prompt').textContent = jade.prompt;
+        systemPrompt = jade.prompt
 
         // Load prompt hints
         loadPromptHints(jadeId);
@@ -36,6 +45,26 @@ async function loadJadeData(jadeId) {
         console.error("Error loading jade data:", error);
     } finally {
         hideLoading();
+    }
+}
+
+async function loadAPIConfig() {
+    try {
+        const response = await fetch('../../assets/APIData.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const apiConfig = await response.json();
+
+        // Set the global variables
+        OPENAI_ENGINE_VERSION = apiConfig.OPENAI_ENGINE_VERSION;
+        OPENAI_API_KEY = apiConfig.OPENAI_API_KEY;
+        BASE_URL = apiConfig.BASE_URL;
+
+        console.log("API configuration loaded successfully");
+    } catch (error) {
+        console.error("Error loading API config:", error);
+        throw error; // Re-throw to be caught by the caller
     }
 }
 
@@ -101,23 +130,52 @@ function sendMessage() {
 
     if (message) {
         appendMessage('user', message);
-        messageInput.value = ''; // Clear the input box after sending
+        messageInput.value = '';
         getAiResponse(message);
     }
 }
 
 async function getAiResponse(message) {
-    // Simulate AI response
-    const aiResponse = await simulateAiResponse(message);
+    const aiResponse = await chat_with_gpt(message);
     appendMessage('ai', aiResponse);
 }
 
-async function simulateAiResponse(message) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(`AI: 这是一个模拟回复，你说了：${message}`);
-        }, 1000);
-    });
+async function chat_with_gpt(message) {
+    const url = BASE_URL;
+    const headers = {
+        "Authorization": `Bearer ${OPENAI_API_KEY}`,
+        "Content-Type": "application/json"
+    };
+    const data = {
+        "model": OPENAI_ENGINE_VERSION,
+        "messages": [
+            {
+                "role": "system",
+                "content": systemPrompt
+            },
+            {
+                "role": "user",
+                "content": message
+            }
+        ]
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            return responseData.choices[0].message.content;
+        } else {
+            return `Error: ${response.status}, ${await response.text()}`;
+        }
+    } catch (error) {
+        return `Error: ${error.message}`;
+    }
 }
 
 function appendMessage(sender, message) {
@@ -125,20 +183,13 @@ function appendMessage(sender, message) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', sender);
     messageElement.textContent = message;
-
-    if (sender === 'ai') {
-        const avatarSrc = document.getElementById('jade-avatar').src;
-        messageElement.style.setProperty('--ai-avatar-url', `url(${avatarSrc})`);
-    }
-
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
 }
 
 function handleKeyDown(event) {
-    if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
+    if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault(); // Prevent newline in textarea
         sendMessage();
-        return false; // Stop event propagation
     }
 }

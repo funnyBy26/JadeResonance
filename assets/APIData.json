@@ -1,0 +1,5 @@
+{
+  "OPENAI_ENGINE_VERSION": "gpt-4o",
+  "OPENAI_API_KEY": "sk-zk244a6d02a7f66f003c4b85cb829455a3f6795df282ebfa",
+  "BASE_URL":  "https://api.zhizengzeng.com/v1/chat/completions"
+}
