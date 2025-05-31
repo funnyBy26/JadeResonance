@@ -1,0 +1,174 @@
+/* 博物馆首页样式 */
+body {
+    background-image: url('../assets/images/museum-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: #fff;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.museum-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding-top: 2rem;
+}
+
+.museum-header h1 {
+    font-size: 3.5rem;
+    font-weight: 400;
+    letter-spacing: 4px;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.timeline-container {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.timeline-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.1));
+}
+
+.timeline-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4rem;
+    position: relative;
+}
+
+.timeline-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 2rem;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease;
+    overflow: hidden; /* 关键：隐藏超出圆形的部分 */
+}
+
+.timeline-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 关键：图片填充整个圆形，超出部分裁剪 */
+    border-radius: 50%; /* 保证图片本身也是圆形 */
+}
+
+.timeline-icon:hover {
+    transform: scale(1.1);
+}
+
+.timeline-icon img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.timeline-content {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: translateY(-5px);
+}
+
+.timeline-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+.timeline-content p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .museum-header h1 {
+        font-size: 2.5rem;
+    }
+
+    .timeline::before {
+        left: 30px;
+    }
+
+    .timeline-item {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 30px;
+    }
+
+    .timeline-icon {
+        margin: 0 0 1rem 0;
+    }
+
+    .timeline-content {
+        width: calc(100% - 100px);
+        margin-left: 100px;
+    }
+} 
