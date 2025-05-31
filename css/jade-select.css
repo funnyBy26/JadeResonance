@@ -1,7 +1,8 @@
 /* 玉石选择页面样式 */
 body {
-    background-image: url('../assets/images/background/jade-bg.jpg');
+    background-image: url('../assets/images/background/bgForSelect.png');
     background-size: cover;
+    background-repeat: no-repeat; /* Prevent the image from repeating */
     background-position: center;
     background-attachment: fixed;
     min-height: 100vh; /* Changed height to min-height */

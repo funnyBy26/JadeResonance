@@ -22,13 +22,12 @@ async function loadJadeData(jadeId) {
         console.log("Jade data loaded:", jade); // Debugging statement
 
         // Set jade data
-        document.getElementById('jade-video').querySelector('source').src = jade.videoSrc;
-        document.getElementById('jade-video').load(); // Important to load the new source
         document.getElementById('jade-image').src = jade.imageSrc;
+        document.getElementById('jade-avatar').src = jade.imageSrc; // Changed ID here
         document.getElementById('jade-name').textContent = jade.name;
         document.getElementById('jade-character').textContent = jade.character;
         document.getElementById('jade-character-description').textContent = jade.characteristics;
-        //document.getElementById('jade-prompt').textContent = jade.prompt;
+        document.getElementById('jade-prompt').textContent = jade.prompt;
 
         // Load prompt hints
         loadPromptHints(jadeId);
@@ -102,7 +101,7 @@ function sendMessage() {
 
     if (message) {
         appendMessage('user', message);
-        messageInput.value = '';
+        messageInput.value = ''; // Clear the input box after sending
         getAiResponse(message);
     }
 }
@@ -126,13 +125,20 @@ function appendMessage(sender, message) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', sender);
     messageElement.textContent = message;
+
+    if (sender === 'ai') {
+        const avatarSrc = document.getElementById('jade-avatar').src;
+        messageElement.style.setProperty('--ai-avatar-url', `url(${avatarSrc})`);
+    }
+
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
 }
 
 function handleKeyDown(event) {
-    if (event.key === 'Enter' && !event.shiftKey) {
+    if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
         event.preventDefault(); // Prevent newline in textarea
         sendMessage();
+        return false; // Stop event propagation
     }
 }

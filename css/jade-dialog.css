@@ -1,6 +1,23 @@
+body{
+    background-image: url('../assets/images/background/bgForSelect.png');
+    background-size: cover;
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh; /* Changed height to min-height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5vh 2vw; /* Using vh and vw */
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
 .container {
     display: flex;
-    height: 100vh;
+    flex-direction: start;
+    height: 98vh;
+    margin-top: 2vh;
     width :100%;
 }
 
@@ -17,7 +34,14 @@
     /* flex: 6;  No longer needed */
     display: flex;
     justify-content: start;
-    align-items: center;
+    align-items: start;
+    height: 65vh;
+}
+.jade-image-container img{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Ensure the image fits within the container */
+    object-position: center; /* Center the image */
 }
 
 .jade-image-container video {
@@ -68,14 +92,14 @@
 
 /* Right side: Chat Container */
 .chat-container {
-    width: 65%; /* Takes 65% of the container width */
-    height: 90vh; /* 90% of the viewport height */
-    margin: auto 0; /* Vertically center the container */
+    width: 65%;
+    height: 85vh;
     display: flex;
     flex-direction: column;
-
-    border: 1px solid #ccc; /* Add border to chat-container */
-    border-radius: 10px; /* Rounded corners */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-size: cover;
 }
 
 /* Chat Messages */
@@ -83,6 +107,49 @@
     flex: 1;
     padding: 20px;
     overflow-y: auto;
+    display: flex; /* Use flexbox for message alignment */
+    flex-direction: column; /* Stack messages vertically */
+}
+
+/* Base style for all messages */
+.message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    max-width: 70%; /* Limit message width */
+    word-wrap: break-word; /* Wrap long words */
+    color: black; /* Set text color to black */
+    display: flex; /* Use flexbox for message layout */
+    align-items: flex-start; /* Align items to the top */
+}
+
+/* Style for user messages */
+.message.user {
+    background-color: #DCF8C6; /* Light green background */
+    align-self: flex-end; /* Align to the right */
+    flex-direction: row-reverse; /* Reverse the order of elements */
+}
+
+/* Style for AI messages */
+.message.ai {
+    background-color: #ECE5DD; /* Light gray background */
+    align-self: flex-start; /* Align to the left */
+    display: flex;
+    align-items: flex-start;
+}
+
+.message.ai .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-image: url(''); /* Set the background image dynamically */
+    background-size: cover;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.message.ai .message-content {
+    flex: 1; /* Allow message content to take remaining space */
 }
 
 /* Chat Input */
@@ -112,7 +179,7 @@
 #message-input {
     width: 90%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #9d8e8e;
     resize: none; /* Prevent manual resizing */
     height: 80px; /* Set a fixed height */
     overflow: auto; /* Enable scrolling for content that exceeds the height */
@@ -122,7 +189,7 @@
 #send-button {
     width: 13%; /* Adjust width to fill remaining space */
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #12a817;
     color: white;
     border: none;
     cursor: pointer;
