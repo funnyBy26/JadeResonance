@@ -23,16 +23,14 @@ function getJadeIdFromUrl() {
 
 async function loadJadeData(jadeId) {
     showLoading();
-
     try {
         // Simulate loading resources
         const jade = await simulateLoad(jadeId);
         console.log("Jade data loaded:", jade); // Debugging statement
 
         // Set jade data
-        document.getElementById('jade-video').querySelector('source').src = jade.videoSrc;
-        document.getElementById('jade-video').load(); // Important to load the new source
         document.getElementById('jade-image').src = jade.imageSrc;
+        document.getElementById('jade-avatar').src = jade.imageSrc; // Changed ID here
         document.getElementById('jade-name').textContent = jade.name;
         document.getElementById('jade-character').textContent = jade.character;
         document.getElementById('jade-character-description').textContent = jade.characteristics;
@@ -40,6 +38,8 @@ async function loadJadeData(jadeId) {
 
         // Load prompt hints
         loadPromptHints(jadeId);
+
+        getAiResponse("你好，" + jade.name + "。请介绍一下你自己。");
 
     } catch (error) {
         console.error("Error loading jade data:", error);
@@ -141,6 +141,8 @@ async function getAiResponse(message) {
 }
 
 async function chat_with_gpt(message) {
+
+
     const url = BASE_URL;
     const headers = {
         "Authorization": `Bearer ${OPENAI_API_KEY}`,
@@ -175,7 +177,7 @@ async function chat_with_gpt(message) {
         }
     } catch (error) {
         return `Error: ${error.message}`;
-    }
+    } 
 }
 
 function appendMessage(sender, message) {
@@ -183,13 +185,21 @@ function appendMessage(sender, message) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', sender);
     messageElement.textContent = message;
+
+    if (sender === 'ai') {
+        const avatarSrc = document.getElementById('jade-avatar').src;
+        messageElement.style.setProperty('--ai-avatar-url', `url(${avatarSrc})`);
+    }
+    // Append the message to the chat
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
 }
 
 function handleKeyDown(event) {
-    if (event.key === 'Enter' && !event.shiftKey) {
+    if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
+        // If Enter is pressed without Shift, send the message
         event.preventDefault(); // Prevent newline in textarea
         sendMessage();
+        return false; // Prevent default behavior
     }
 }
