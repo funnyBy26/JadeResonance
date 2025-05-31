@@ -1,0 +1,131 @@
+.container {
+    display: flex;
+    height: 100vh;
+    width :100%;
+}
+
+/* Left side: Jade Info */
+.jade-info {
+    width: 40%; /* Takes 40% of the container width */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute space between video and bottom container */
+}
+
+/* Top part: Video */
+.jade-image-container {
+    /* flex: 6;  No longer needed */
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.jade-image-container video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Bottom part: Image and Name and Character */
+.jade-bottom-container {
+    display: flex; /* Display children in a row */
+    margin-bottom: 10%; /* Add a small gap at the bottom */
+    
+}
+
+.jade-image-bottom {
+    width: 30%; /* Take up half of the container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.jade-image-bottom .avatar-name-container {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.jade-image-bottom img {
+    width: 100px; /* Small avatar style */
+    height: 100px;
+    border-radius: 50%; /* Circular avatar */
+    object-fit: cover; /* Crop the image to fill the container */
+    object-position: top; /* Position the top part of the image */
+    margin-bottom: 10px; /* Space between avatar and name */
+}
+
+.jade-image-bottom #jade-name {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.jade-character {
+    width: 60%; /* Take up half of the container */
+    padding: 20px;
+}
+
+/* Right side: Chat Container */
+.chat-container {
+    width: 65%; /* Takes 65% of the container width */
+    height: 90vh; /* 90% of the viewport height */
+    margin: auto 0; /* Vertically center the container */
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid #ccc; /* Add border to chat-container */
+    border-radius: 10px; /* Rounded corners */
+}
+
+/* Chat Messages */
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Chat Input */
+.chat-input {
+    padding: 20px;
+    border-top: 1px solid #ccc;
+    margin-bottom: 0px; /* Reduce the gap at the bottom */
+}
+
+.input-send-container {
+    display: flex; /* Align items horizontally */
+    align-items: center; /* Vertically center items */
+}
+
+.chat-hints {
+    margin-bottom: 10px;
+}
+
+.chat-hints button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+#message-input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    resize: none; /* Prevent manual resizing */
+    height: 80px; /* Set a fixed height */
+    overflow: auto; /* Enable scrolling for content that exceeds the height */
+    margin-right: 10px; /* Add spacing between input and button */
+}
+
+#send-button {
+    width: 13%; /* Adjust width to fill remaining space */
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    height: fit-content; /* Adjust height to content */
+    flex-grow: 1; /* Make the button fill the remaining space */
+}
