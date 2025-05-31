@@ -136,13 +136,24 @@ function sendMessage() {
 }
 
 async function getAiResponse(message) {
-    const aiResponse = await chat_with_gpt(message);
-    appendMessage('ai', aiResponse);
+    // Create loading message
+    const loadingMessageElement = appendMessage('ai', '', true);
+    const messageContentElement = loadingMessageElement.querySelector('.message-content');
+
+    try {
+        let aiResponse = '';
+        aiResponse = await chat_with_gpt(message, (partialResponse) => {
+            messageContentElement.textContent = partialResponse; // Update message content
+        });
+        // Update message content
+        loadingMessageElement.classList.remove('loading'); // Remove loading class
+    } catch (error) {
+        loadingMessageElement.querySelector('.message-content').textContent = `Error: ${error.message}`;
+        loadingMessageElement.classList.remove('loading'); // Remove loading class
+    }
 }
 
-async function chat_with_gpt(message) {
-
-
+async function chat_with_gpt(message, updateCallback) {
     const url = BASE_URL;
     const headers = {
         "Authorization": `Bearer ${OPENAI_API_KEY}`,
@@ -159,7 +170,8 @@ async function chat_with_gpt(message) {
                 "role": "user",
                 "content": message
             }
-        ]
+        ],
+        "stream": true // Enable streaming
     };
 
     try {
@@ -170,29 +182,85 @@ async function chat_with_gpt(message) {
         });
 
         if (response.ok) {
-            const responseData = await response.json();
-            return responseData.choices[0].message.content;
+            const reader = response.body.getReader();
+            let decoder = new TextDecoder();
+            let aiResponse = '';
+
+            try {
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) {
+                        break;
+                    }
+
+                    const chunk = decoder.decode(value);
+                    const lines = chunk.split('\n').filter(line => line.trim() !== '');
+
+                    for (const line of lines) {
+                        const message = line.replace(/^data: /, '');
+                        if (message === '[DONE]') {
+                            return aiResponse;
+                        }
+
+                        try {
+                            const parsed = JSON.parse(message);
+                            const content = parsed.choices[0].delta.content;
+                            if (content) {
+                                aiResponse += content;
+                                updateCallback(aiResponse); // Call the update callback
+                            }
+                        } catch (e) {
+                            console.error("Could not JSON parse stream message", message, e);
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error("Stream read error", e);
+            }
+
+            return aiResponse;
         } else {
             return `Error: ${response.status}, ${await response.text()}`;
         }
     } catch (error) {
         return `Error: ${error.message}`;
-    } 
+    }
 }
 
-function appendMessage(sender, message) {
+function appendMessage(sender, message, isLoading = false) {
     const chatMessages = document.getElementById('chat-messages');
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', sender);
-    messageElement.textContent = message;
 
     if (sender === 'ai') {
         const avatarSrc = document.getElementById('jade-avatar').src;
-        messageElement.style.setProperty('--ai-avatar-url', `url(${avatarSrc})`);
+
+        // Create avatar element
+        const avatarElement = document.createElement('div');
+        avatarElement.classList.add('avatar');
+        avatarElement.style.backgroundImage = `url(${avatarSrc})`;
+
+        // Create message content element
+        const messageContentElement = document.createElement('div');
+        messageContentElement.classList.add('message-content');
+        if (isLoading) {
+            messageContentElement.textContent = '玉的简讯正在传来...'; // Show loading indicator
+            messageElement.classList.add('loading'); // Add loading class
+        } else {
+            messageContentElement.textContent = message;
+        }
+
+        // Append avatar and message content to message element
+        messageElement.appendChild(avatarElement);
+        messageElement.appendChild(messageContentElement);
+    } else {
+        messageElement.textContent = message;
     }
     // Append the message to the chat
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+
+    return messageElement; // Return the message element
 }
 
 function handleKeyDown(event) {

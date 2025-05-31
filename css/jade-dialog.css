@@ -152,6 +152,18 @@ body{
     flex: 1; /* Allow message content to take remaining space */
 }
 
+/* Loading effect for AI messages */
+.message.ai.loading .message-content::after {
+    content: '...'; /* Add ellipsis */
+    animation: ellipsis 1s infinite; /* Animate ellipsis */
+}
+
+@keyframes ellipsis {
+    0% { content: '.'; }
+    33% { content: '..'; }
+    66% { content: '...'; }
+}
+
 /* Chat Input */
 .chat-input {
     padding: 20px;
