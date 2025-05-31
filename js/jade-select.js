@@ -63,14 +63,12 @@ function typeWriterWithCursor(element, text, speed, callback) {
         } else {
             // 打字效果完成后，开始闪烁光标
             cursorElement.classList.add('blink');
-            
-            // 如果有回调函数，执行
-            if (callback) {
-                callback();
-            }
         }
     }
-    
+    // 开始打字
+    if (callback) {
+        callback();
+    }
     type();
 }
 
@@ -241,21 +239,39 @@ function animateCardsInCurrentSlide() {
 
 // 为卡片设置点击事件
 function setupCardClickEvents() {
+    console.log("setupCardClickEvents called"); // Debugging statement
     const cards = document.querySelectorAll('.jade-card');
     
     cards.forEach(card => {
+        console.log("Adding event listener to card:", card); // Debugging statement
         card.addEventListener('click', function() {
-            const jadeType = this.getAttribute('data-jade');
-            navigateToDialogPage(jadeType);
+            console.log("Card clicked:", this); // Debugging statement
+            // Find the image within the card that was clicked
+            const img = this.querySelector('img[data-jade-id]');
+            console.log("Image found:", img); // Debugging statement
+            if (img) {
+                const jadeId = img.getAttribute('data-jade-id');
+                console.log("Jade ID:", jadeId); // Debugging statement
+                navigateToDialogPage(jadeId);
+                console.log("Navigating to dialog page with jadeId:", jadeId); // Debugging statement
+            }
         });
     });
 }
 
 // 导航到对话页面
-function navigateToDialogPage(jadeType) {
+function navigateToDialogPage(jadeId) {
+    // 显示加载动画
+    showLoading();
+
     // 将选择的玉石类型存储到sessionStorage
-    sessionStorage.setItem('selectedJade', jadeType);
+    sessionStorage.setItem('selectedJade', jadeId);
     
     // 跳转到对话页面
-    navigateTo('../jade-dialog/index.html');
+    window.location.href = `../jade-dialog/index.html?jadeId=${jadeId}`;
+
+    // 延迟一段时间后隐藏加载动画，确保页面跳转完成后再执行
+    setTimeout(() => {
+        hideLoading();
+    }, 500); // 延迟 0.5 秒，可以根据实际情况调整
 }

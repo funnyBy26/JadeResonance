@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>与玉石对话</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/jade-dialog.css">
+    <link rel="stylesheet" href="../../css/loading.css">
+</head>
+<body>
+    <div id="loading-container" style="display:none;">
+        <img id="loading-image" src="../../assets/images/loading.png" alt="Loading..." />
+    </div>
+
+    <div class="container">
+        <div class="jade-info">
+            <div class="jade-image-container">
+                <video id="jade-video" width="100%" autoplay loop muted>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="jade-bottom-container">
+                <div class="jade-image-bottom">
+                    <div class="avatar-name-container">
+                        <img id="jade-image" src="" alt="玉石形象">
+                        <h2 id="jade-name"></h2>
+                    </div>
+                </div>
+                <div class="jade-character">
+                    <h2 id="jade-character"></h2>
+                    <p id="jade-character-description"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-messages" id="chat-messages">
+                <!-- Messages will be appended here -->
+            </div>
+            <div class="chat-input">
+                <div class="chat-hints" id="chat-hints">
+                    <!-- Hint buttons will be added here -->
+                </div>
+                <div class="input-send-container">
+                    <textarea id="message-input" placeholder="和玉石聊聊吧... (Shift + Enter 换行)"
+                              onkeydown="handleKeyDown(event)"></textarea>
+                    <button id="send-button">发送</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/common.js"></script>
+    <script src="../../js/jade-dialog.js"></script>
+    <script src="../../js/loading.js"></script>
+</body>
+</html>
