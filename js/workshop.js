@@ -1,3 +1,16 @@
+let OPENAI_ENGINE_VERSION;
+let OPENAI_API_KEY;
+let BASE_URL;
+let SYSTEM_PROMPT;
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        await loadAPIConfig();
+    } catch (error) {
+        console.error("初始化失败:", error);
+        alert("无法加载API配置，请刷新页面或检查网络");
+    }
+});
+
 async function generateImage() {
     const inputText = document.querySelector('.input-area').value;
     if (!inputText.trim()) {
@@ -5,45 +18,24 @@ async function generateImage() {
         return;
     }
 
-    // 通过接口将输入的文字传递到后端
-    try {
-        const textResponse = await fetch('/api/save-text', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ text: inputText })
-        });
-        if (!textResponse.ok) {
-            throw new Error('文字保存接口请求失败');
-        }
-    } catch (err) {
-        alert('文字保存失败，请稍后重试');
-        return;
-    }
+    // // 保存文本到后端
+    // try {
+    //     const textResponse = await fetch('/api/save-text', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({ text: inputText })
+    //     });
+    //     if (!textResponse.ok) throw new Error('文字保存失败');
+    // } catch (err) {
+    //     alert('文字保存失败，请稍后重试');
+    //     return;
+    // }
 
     // 显示加载状态
     document.getElementById('loading-container').style.display = 'flex';
 
     try {
-        const response = await fetch('/api/generate-image', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ prompt: inputText })
-        });
-
-        if (!response.ok) {
-            throw new Error('图片生成API请求失败');
-        }
-
-        const data = await response.json();
-        // 假设API返回格式为 { imageUrl: 'xxx' }
-        const imageUrl = data.imageUrl;
-        if (!imageUrl) {
-            throw new Error('API未返回图片地址');
-        }
+        const imageUrl = await getAPIImage(inputText);
 
         // 创建新的图片卡片
         const imageCard = document.createElement('div');
@@ -69,6 +61,65 @@ async function generateImage() {
     } finally {
         // 隐藏加载状态
         document.getElementById('loading-container').style.display = 'none';
+    }
+}
+
+async function loadAPIConfig() {
+    try {
+        const response = await fetch('../../assets/APIData.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const apiConfig = await response.json();
+
+        OPENAI_ENGINE_VERSION = apiConfig.OPENAI_IMAGE_ENGINE_VERSION;
+        OPENAI_API_KEY = apiConfig.OPENAI_IMAGE_API_KEY;
+        BASE_URL = apiConfig.BASE_IMAGE_URL;
+        SYSTEM_PROMPT = apiConfig.SYSTEM_IMAGE_PROMPT;
+
+        console.log("API configuration loaded successfully");
+    } catch (error) {
+        console.error("Error loading API config:", error);
+        throw error;
+    }
+}
+
+async function getAPIImage(prompt) {
+    const url = BASE_URL; 
+    const headers = {
+        "Authorization": `Bearer ${OPENAI_API_KEY}`, 
+        "Content-Type": "application/json"
+    };
+    const data = {
+        model: OPENAI_ENGINE_VERSION,     
+        prompt: SYSTEM_PROMPT+prompt,      
+        n: 4,                   
+        size: "1024x1024",        
+        response_format: "url"  
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error(`API 请求失败: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log(result);
+        
+        if (result?.data?.[0]?.url) {
+            return result.data[0].url; 
+        } else {
+            throw new Error("API 返回的数据格式不符合预期");
+        }
+    } catch (error) {
+        console.error("生成图片时出错:", error);
+        throw error; 
     }
 }
 
