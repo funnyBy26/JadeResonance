@@ -18,49 +18,26 @@ async function generateImage() {
         return;
     }
 
-    // // 保存文本到后端
-    // try {
-    //     const textResponse = await fetch('/api/save-text', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ text: inputText })
-    //     });
-    //     if (!textResponse.ok) throw new Error('文字保存失败');
-    // } catch (err) {
-    //     alert('文字保存失败，请稍后重试');
-    //     return;
-    // }
-
     // 显示加载状态
-    document.getElementById('loading-container').style.display = 'flex';
+    const loadingContainer = document.getElementById('loading-container');
+    const imageDisplay = document.getElementById('image-display');
+    loadingContainer.style.display = 'flex';
+    imageDisplay.style.display = 'none';
 
     try {
         const imageUrl = await getAPIImage(inputText);
+        
+        // 更新图片显示
+        const generatedImage = document.getElementById('generated-image');
+        generatedImage.src = imageUrl;
+        
+        // 隐藏加载状态，显示生成的图片
+        loadingContainer.style.display = 'none';
+        imageDisplay.style.display = 'block';
 
-        // 创建新的图片卡片
-        const imageCard = document.createElement('div');
-        imageCard.className = 'image-card';
-        imageCard.innerHTML = `
-            <div class="image-container">
-                <img src="${imageUrl}" alt="生成的设计图">
-            </div>
-            <div class="image-actions">
-                <button class="save-btn" onclick="saveImage('${imageUrl}')">保存图片</button>
-            </div>
-        `;
-
-        // 使用 prepend（insertBefore）
-        const gallery = document.getElementById('imageGallery');
-        gallery.insertBefore(imageCard, gallery.firstChild);
-
-        // 自动滚动到新添加的图片
-        imageCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
     } catch (error) {
         console.error('生成图片时出错:', error);
         alert('生成图片时出现错误，请稍后重试');
-    } finally {
-        // 隐藏加载状态
-        document.getElementById('loading-container').style.display = 'none';
     }
 }
 
@@ -123,14 +100,20 @@ async function getAPIImage(prompt) {
     }
 }
 
-async function saveImage(imageUrl) {
+async function saveImage() {
+    const generatedImage = document.getElementById('generated-image');
+    if (!generatedImage.src) {
+        alert('没有可保存的图片');
+        return;
+    }
+
     try {
-        const response = await fetch(imageUrl);
+        const response = await fetch(generatedImage.src);
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `设计图_${new Date().getTime()}.png`;
+        a.download = `玉器设计图_${new Date().getTime()}.png`;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
