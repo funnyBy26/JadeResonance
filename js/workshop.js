@@ -5,30 +5,63 @@ async function generateImage() {
         return;
     }
 
+    // 通过接口将输入的文字传递到后端
+    try {
+        const textResponse = await fetch('/api/save-text', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text: inputText })
+        });
+        if (!textResponse.ok) {
+            throw new Error('文字保存接口请求失败');
+        }
+    } catch (err) {
+        alert('文字保存失败，请稍后重试');
+        return;
+    }
+
     // 显示加载状态
     document.getElementById('loading-container').style.display = 'flex';
 
     try {
-        // 模拟API调用延迟
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        const response = await fetch('/api/generate-image', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ prompt: inputText })
+        });
+
+        if (!response.ok) {
+            throw new Error('图片生成API请求失败');
+        }
+
+        const data = await response.json();
+        // 假设API返回格式为 { imageUrl: 'xxx' }
+        const imageUrl = data.imageUrl;
+        if (!imageUrl) {
+            throw new Error('API未返回图片地址');
+        }
 
         // 创建新的图片卡片
         const imageCard = document.createElement('div');
         imageCard.className = 'image-card';
         imageCard.innerHTML = `
             <div class="image-container">
-                <img src="../../assets/images/example-design.jpg" alt="生成的设计图">
+                <img src="${imageUrl}" alt="生成的设计图">
             </div>
             <div class="image-actions">
-                <button class="save-btn" onclick="saveImage('../../assets/images/example-design.jpg')">保存图片</button>
+                <button class="save-btn" onclick="saveImage('${imageUrl}')">保存图片</button>
             </div>
         `;
 
-        // 修改这里：使用 prepend 而不是 appendChild
+        // 使用 prepend（insertBefore）
         const gallery = document.getElementById('imageGallery');
         gallery.insertBefore(imageCard, gallery.firstChild);
 
-        // 可选：自动滚动到新添加的图片
+        // 自动滚动到新添加的图片
         imageCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
     } catch (error) {
         console.error('生成图片时出错:', error);
