@@ -2,6 +2,7 @@
  * 玉石选择页面JavaScript
  */
 
+const PATH_PREFIX = '../../';
 // 页面标题文本
 const titleText = "欢迎选择你想要对话的玉石，开始神奇的旅程";
 
@@ -27,7 +28,7 @@ onDocumentReady(() => {
 // Load jade data from JSON file
 async function loadJadeData() {
     try {
-        const response = await fetch('../../assets/jadeData.json');
+        const response = await fetch(PATH_PREFIX + 'assets/jadeData.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -81,12 +82,14 @@ function populateJadeCards() {
             const hoverImage = card.querySelector('.jade-image.hover');
             const jadeName = card.querySelector('.jade-name');
 
-            defaultImage.src = jade.defaultImageSrc;
-            hoverImage.src = jade.imageSrc;
+            // 使用路径前缀
+            defaultImage.src = PATH_PREFIX + jade.defaultImageSrc;
+            hoverImage.src = PATH_PREFIX + jade.imageSrc;
             jadeName.textContent = jade.name;
         }
     });
 }
+
 
 // 带光标的打字机效果
 function typeWriterWithCursor(element, text, speed, callback) {
@@ -293,9 +296,9 @@ function setupCardClickEvents() {
 
 // 导航到对话页面
 function navigateToDialogPage(jadeType) {
-    // 将选择的玉石类型存储到sessionStorage
+    // 将选择的玉石类型存储到 sessionStorage
     sessionStorage.setItem('selectedJade', jadeType);
 
-    // 跳转到对话页面
-    navigateTo('../jade-dialog/index.html');
+    // 跳转到对话页面，并在 URL 中添加 jadeId 参数
+    window.location.href = `../jade-dialog/index.html?jadeId=${jadeType}`;
 }

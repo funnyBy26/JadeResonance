@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function getJadeIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('jadeId');
+    // 先尝试从 URL 获取 jadeId，如果没有则从 sessionStorage 获取
+    return urlParams.get('jadeId') || sessionStorage.getItem('selectedJade') || 'hetian';
 }
 
 async function loadJadeData(jadeId) {
@@ -28,9 +29,12 @@ async function loadJadeData(jadeId) {
         const jade = await simulateLoad(jadeId);
         console.log("Jade data loaded:", jade); // Debugging statement
 
+        // 添加路径前缀
+        const pathPrefix = '../../';
+        
         // Set jade data
-        document.getElementById('jade-image').src = jade.imageSrc;
-        document.getElementById('jade-avatar').src = jade.imageSrc; // Changed ID here
+        document.getElementById('jade-image').src = pathPrefix + jade.imageSrc;
+        document.getElementById('jade-avatar').src = pathPrefix + jade.imageSrc;
         document.getElementById('jade-name').textContent = jade.name;
         document.getElementById('jade-character').textContent = jade.character;
         document.getElementById('jade-character-description').textContent = jade.characteristics;
@@ -47,6 +51,7 @@ async function loadJadeData(jadeId) {
         hideLoading();
     }
 }
+
 
 async function loadAPIConfig() {
     try {
