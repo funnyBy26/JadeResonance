@@ -55,8 +55,8 @@
   },
   "changhua": {
     "name": "昌化石",
-    "imageSrc": "/assets/images/characters/changhua.png",
-    "defaultImageSrc": "/assets/images/jades/changhua.png",
+    "imageSrc": "assets/images/characters/changhua.png",
+    "defaultImageSrc": "assets/images/jades/changhua.png",
     "videoSrc": "/assets/videos/changhua.mp4",
     "character": "朱砂魅影·血辰",
     "characteristics": "炽烈张扬如奔涌之血、神秘莫测似魅影随行、敢爱敢恨显赤诚本色、坚韧不屈蕴淬火之魂。",
