@@ -89,7 +89,7 @@ body::before:hover {
 }
 
 #title-for-gallery{
-    background-image: url('../../assets/icons/植物24.jpg');
+    background-image: url('../../assets/icons/bg-24.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: left bottom;
