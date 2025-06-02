@@ -16,6 +16,14 @@ body {
     width: 100%;
     position: relative;
     z-index: 2;
+    padding: 0 3vw;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.main-content.animate-in {
+    opacity: 1;
+    transition: opacity 0s;
 }
 
 .background {
@@ -89,7 +97,7 @@ body {
 }
 
 .welcome-text {
-    margin-bottom: 40px;
+    margin-bottom: 1vw;
     width: 100%;
     max-width: 800px;
     text-align: center;
@@ -100,13 +108,13 @@ body {
 }
 
 .welcome-text h1 {
-    font-size: 56px;
-    margin-bottom: 32px;
+    font-size: 3vw;
+    margin-bottom: 1vw;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .welcome-text p {
-    font-size: 26px;
+    font-size: 1.5vw;
     line-height: 1.8;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 }
@@ -115,20 +123,24 @@ body {
     width: 100%;
     max-width: 1200px;
     display: flex;
-    gap: 40px;
+    gap: 2vw;
     justify-content: center;
     position: static;
     transform: none;
     opacity: 0; /* 动画用 */
-    margin-top: 60px;
+    margin-top: 1vw;
 }
 
 .module-btn {
-    width: 300px;
-    height: 400px;
+    width: 15vw;
+    min-width: 18vw;
+    max-width: 28vw;
+    height: 22vw;
+    min-height: 18vw;
+    max-height: 36vw;
     background: none;
     border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 15px;
+    border-radius: 1vw;
     cursor: pointer;
     transition: all 0.3s;
     overflow: hidden;
@@ -151,17 +163,17 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
-    padding: 18px 0 12px 0;
+    padding: 1.2vw 0 0.8vw 0;
     background: rgba(0,0,0,0); /* 默认无背景 */
     color: #fff;
-    font-size: 26px;
+    font-size: 1.5vw;
     text-align: center;
     font-weight: bold;
     text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     letter-spacing: 2px;
     z-index: 2;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 1vw;
+    border-bottom-right-radius: 1vw;
     pointer-events: none;
     transition: background 0.3s;
 }
@@ -183,6 +195,8 @@ body {
     text-align: center;
     color: white;
     font-size: 1.2em;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 @keyframes rotateJade {
@@ -208,30 +222,12 @@ body {
 }
 
 /* 初始状态 */
-.topbar, .welcome-text, .module-buttons {
+.topbar, .welcome-text, .module-buttons, .story-guide {
     opacity: 0;
     transform: translateY(20px);
 }
 
-/* 背景动画 */
-.background {
-    animation: fadeIn 0.5s ease-out forwards;
-}
 
-/* 欢迎文字动画 */
-.welcome-text {
-    animation: fadeInUp 0.5s ease-out 0.5s forwards;
-}
-
-/* 顶部导航栏动画 */
-.topbar {
-    animation: fadeInDown 0.5s ease-out 1s forwards;
-}
-
-/* 模块按钮动画 */
-.module-buttons {
-    animation: fadeInUp 0.5s ease-out 1.5s forwards;
-}
 
 @keyframes fadeIn {
     from {
@@ -262,4 +258,45 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+#loading-mask {
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; right: 0; bottom: 0;
+    width: 100vw; height: 100vh;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s;
+}
+
+#loading-img {
+    width: 10vw;
+    height: 10vw;
+    animation: loading-rotate 1.2s linear 1;
+}
+
+@keyframes loading-rotate {
+    from { transform: rotate(0deg);}
+    to { transform: rotate(360deg);}
+}
+
+.hidden-before-load {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+.topbar.animate-in {
+    animation: fadeInDown 0.5s ease-out 0s forwards;
+}
+.welcome-text.animate-in {
+    animation: fadeInUp 0.5s ease-out 0.3s forwards;
+}
+.module-buttons.animate-in {
+    animation: fadeInUp 0.5s ease-out 0.6s forwards;
+}
+.story-guide.animate-in {
+    animation: fadeInUp 0.5s ease-out 0.9s forwards;
 }
