@@ -21,8 +21,10 @@ async function generateImage() {
     // 显示加载状态
     const loadingContainer = document.getElementById('loading-container');
     const imageDisplay = document.getElementById('image-display');
+    const titleForGallery = document.getElementById('title-for-gallery');
     loadingContainer.style.display = 'flex';
     imageDisplay.style.display = 'none';
+    titleForGallery.style.display = 'none';
 
     try {
         const imageUrl = await getAPIImage(inputText);
@@ -33,6 +35,7 @@ async function generateImage() {
         
         // 隐藏加载状态，显示生成的图片
         loadingContainer.style.display = 'none';
+        titleForGallery.style.display = 'none';
         imageDisplay.style.display = 'block';
 
     } catch (error) {

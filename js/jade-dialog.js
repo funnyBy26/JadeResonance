@@ -249,7 +249,7 @@ function appendMessage(sender, message, isLoading = false) {
         const messageContentElement = document.createElement('div');
         messageContentElement.classList.add('message-content');
         if (isLoading) {
-            messageContentElement.textContent = '玉的简讯正在传来...'; // Show loading indicator
+            messageContentElement.textContent = '玉石的简讯正在传来...'; // Show loading indicator
             messageElement.classList.add('loading'); // Add loading class
         } else {
             messageContentElement.textContent = message;
