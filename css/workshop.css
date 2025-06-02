@@ -6,7 +6,7 @@
 }
 
 body {
-    /* background-image: url('../assets/images/workshop-bg.jpg'); */
+    background-image: url('../assets/images/background/bgForSelect.png');
     font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
     background-color: #333;
     color: #333;
@@ -21,22 +21,58 @@ body::before {
     left: 20px;
     width: 200px;
     height: 200px;
-    background-image: url('../../assets/icons/人物14.png');
+    background-image: url('../../assets/icons/character14.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    z-index: 1000;
+    z-index: 90;
     transition: transform 0.3s ease;
 }
 
 body::before:hover {
     transform: scale(1.1);
 }
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    z-index: 100;
+}
 
+.topbar-logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.topbar-nav {
+    display: flex;
+    gap: 30px;
+}
+
+.topbar-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.topbar-nav a:hover {
+    color: #ffd700;
+}
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1400px; /* 增加容器宽度 */
+    margin: 60px auto;
     padding: 2rem;
+    display: flex; /* 使用 Flexbox */
+    flex-direction: column; /* 垂直排列 Header 和 下面的内容 */
 }
 
 .header {
@@ -79,14 +115,55 @@ body::before:hover {
     padding-bottom: 10px;
 }
 
+.input-section-wrapper {
+    display: flex; /* 使用 Flexbox */
+    gap: 2rem; /* 增加间距 */
+    margin-top: 2rem; /* 增加顶部间距 */
+    min-height: 600px; /* 确保足够的高度 */
+}
+
+#title-for-gallery{
+    background: 
+        linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
+        url('../../assets/icons/plant24.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    height: 100%;
+    width: 100%;
+}
+
+.text-in-gallery{
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    text-align: center;
+    color:#a5a5a5;
+    z-index: 1; /* 确保文本在图片上方 */
+}
+.gallery{
+    flex:1.2;
+    background:#fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden; /* 确保内容不会溢出 */
+    display: flex;
+    align-items: center;
+    justify-content:center ;
+}
 .input-section {
+    flex: 0.8; /* 占据剩余空间 */
     background: white;
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    margin-bottom: 2rem;
-    margin-top: 2rem;
     position: relative;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .input-section::after {
@@ -96,7 +173,7 @@ body::before:hover {
     bottom: 0.5%;
     width: 300px;
     height: 250px;
-    background-image: url('../../assets/icons/山石11.png');
+    background-image: url('../../assets/icons/mountain.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: right bottom;
@@ -106,15 +183,15 @@ body::before:hover {
 }
 
 .input-area {
+    flex:1;
     width: 100%;
-    min-height: 150px;
+    min-height: 200px;
     padding: 1rem;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 1rem;
-    resize: vertical;
+    resize: none;
     margin-bottom: 1rem;
-    margin-top: 1%;
 }
 
 .input-area:focus {
@@ -138,27 +215,39 @@ body::before:hover {
 }
 
 .save-btn {
-    background-color: #9ae0c2;
-    color: white;
+    background-color: #9AE0C2;
+    color: #fff;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+    padding: 10px 20px;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .save-btn:hover {
-    background-color: #b8f0d8;
+    background-color: #7BC8A4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.save-icon {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(1);
 }
 
 #loading-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: absolute; /* 相对定位 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(0,0,0,0.7);
-    padding: 20px;
-    border-radius: 10px;
     display: none;
     justify-content: center;
     align-items: center;
@@ -171,8 +260,8 @@ body::before:hover {
 }
 
 #loading-image {
-    width: 80px;
-    height: 80px;
+    width: 200px; /* 初始加载图片大小 */
+    height: 200px;
     animation: loading-rotate 1.5s linear infinite;
     display: block;
     margin: 0 auto 1rem auto;
@@ -197,39 +286,17 @@ body::before:hover {
     margin-top: 2rem;
 } */
 
-.image-container {
-    width: 100%;
-    height: 300px;
-    background: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.image-container img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
 
 .image-actions {
-    padding: 1rem;
+    position: relative;
+    padding: 15px 20px;  /* 增加内边距 */
     display: flex;
     justify-content: flex-end;
-    gap: 1rem;
+    width: 100%;
+    border-top: 1px solid #e0e0e0;  /* 添加顶部分隔线 */
 }
 
-.gallery {
-    display: flex;
-    overflow-x: auto;
-    gap: 2rem;
-    margin-top: 2rem;
-    padding: 1rem 0;
-    scroll-behavior: smooth;
-    /* 隐藏滚动条但保持可滚动 */
-    scrollbar-width: none;  /* Firefox */
-    -ms-overflow-style: none;  /* IE and Edge */
-}
+
 
 /* 隐藏 Webkit 浏览器的滚动条
 .gallery::-webkit-scrollbar {
@@ -247,4 +314,68 @@ body::before:hover {
 
 .image-card:hover {
     transform: translateY(-5px);
+}
+
+#image-display {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: none;  /* 初始隐藏 */
+    flex-direction: column;
+}
+
+#generated-image {
+    width: 100%;
+    height: 90%;  /* 设置图片高度为90vh */
+    object-fit: contain;
+    padding: 20px;
+}
+
+.save-btn {
+    background-color: #9AE0C2;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;  /* 确保按钮在最上层 */
+}
+
+.save-btn:hover {
+    background-color: #7BC8A4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.museum-link {
+    color: #9AE0C2;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.museum-link:hover {
+    color: #7BC8A4;
+}
+
+.museum-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #9AE0C2;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.museum-link:hover::after {
+    transform: scaleX(1);
 }

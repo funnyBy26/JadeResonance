@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="../../css/buttons.css">
 </head>
 <body>
+    <div class="topbar">
+        <div class="topbar-logo">玉韵千年</div>
+        <nav class="topbar-nav">
+            <a href="../../index.html">首页</a>
+            <a href="../../about.html">关于我们</a>
+            <a href="https://github.com/funnyBy26/JadeResonance">联系我们</a>
+        </nav>
+    </div>
     <div class="container">
         <div class="header">
             <h1>唤醒沉睡的玉魄，定制你的专属玉器</h1>
@@ -18,28 +26,43 @@
                 <br>
                 纹饰主题："龙凤呈祥 / 山水意境 / 几何抽象…"
                 <br>
-                特殊需求："想要镶嵌金丝 / 希望呈现冰裂纹…"</p>
+                特殊需求："想要镶嵌金丝 / 希望呈现冰裂纹…"
+                <br>
+                没有灵感？没关系，欢迎参观博物馆寻找灵感，<a href="../museum/museum.html" class="museum-link">点击这里参观</a>
+            </p>
         </div>
 
-        
-        <div id="loading-container">
-            <img id="loading-image" src="../../assets/images/loading.png">
-            <p>玉匠精灵正在雕刻...</p>
-        </div>
+        <div class="input-section-wrapper">
+            <div class="gallery">
+                <div id="title-for-gallery">
+                    <h2 class="text-in-gallery">完成的设计图将在这里展示...</h2>
+                </div>
+                <div id="loading-container">
+                    <img id="loading-image" src="../../assets/images/loading.png">
+                    <p>玉匠精灵正在雕刻...</p>
+                </div>
+                <div id="image-display" style="display: none;">
+                    <img id="generated-image" src="">
+                    <div class="image-actions">
+                        <button class="save-btn" onclick="saveImage()">
+                            <img src="../../assets/icons/download.png" alt="下载" class="save-icon">
+                            <span>保存设计图</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-        <div class="gallery" id="imageGallery">
-            <!-- 生成的图片将在这里显示 -->
-        </div>
-
-        <div class="input-section">
-            <textarea 
-                class="input-area" 
-                placeholder="请详细描述你想要的设计创意，例：宋代风格的青玉笔洗，表面雕刻竹林七贤图案"
-            ></textarea>
-            <div class="button _3" onclick="generateImage()"> <span>生成设计图</span>
-                <div class="back"></div>
+            <div class="input-section">
+                <textarea 
+                    class="input-area" 
+                    placeholder="请详细描述你想要的设计创意，例：宋代风格的青玉笔洗，表面雕刻竹林七贤图案"
+                ></textarea>
+                <div class="button _3" onclick="generateImage()"> <span>生成设计图</span>
+                    <div class="back"></div>
+                </div>
             </div>
         </div>
+
     </div>
 
     <script src="../../js/common.js"></script>
