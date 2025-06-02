@@ -5,5 +5,5 @@
   "OPENAI_IMAGE_API_KEY": "sk-zk2a12c0d5261d5ba19629079a240aab2e8683c0b48d701a",
   "BASE_URL":  "https://api.zhizengzeng.com/v1/chat/completions",
   "BASE_IMAGE_URL": "https://api.zhizengzeng.com/v1/images/generations",
-  "SYSTEM_IMAGE_PROMPT": "你是中国一个技艺精湛的玉石雕刻设计师，请你给我符合以下描述的设计稿，并给出4张的设计稿图样供我选择："
+  "SYSTEM_IMAGE_PROMPT": "你是中国一个技艺精湛的玉石雕刻设计师，请你给我符合以下描述的设计稿，并给出所需要的所有设计稿图样供我选择："
 }
