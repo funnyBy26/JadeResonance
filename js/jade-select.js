@@ -21,6 +21,7 @@ let jadeData = {}; // Store jade data here
 // 当文档加载完成后执行初始化
 onDocumentReady(() => {
     loadJadeData().then(() => {
+        preloadImages(); // Preload images after loading jade data
         initJadeSelectPage();
     });
 });
@@ -35,6 +36,19 @@ async function loadJadeData() {
         jadeData = await response.json();
     } catch (error) {
         console.error("Error loading jade data:", error);
+    }
+}
+
+// Preload images
+function preloadImages() {
+    for (const key in jadeData) {
+        if (jadeData.hasOwnProperty(key)) {
+            const jade = jadeData[key];
+            const defaultImage = new Image();
+            defaultImage.src = PATH_PREFIX + jade.defaultImageSrc;
+            const hoverImage = new Image();
+            hoverImage.src = PATH_PREFIX + jade.imageSrc;
+        }
     }
 }
 
