@@ -1,5 +1,6 @@
 let systemPrompt = ""
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('jade-dialog.js loaded'); // 检查 JavaScript 文件是否加载
     // Load API configuration first
     loadAPIConfig().then(() => {
         const jadeId = getJadeIdFromUrl();
@@ -27,17 +28,42 @@ async function loadJadeData(jadeId) {
     try {
         // Simulate loading resources
         const jade = await simulateLoad(jadeId);
-        console.log("Jade data loaded:", jade); // Debugging statement
+        console.log("Jade data loaded:", jade); // 检查数据是否加载
 
         // 添加路径前缀
         const pathPrefix = '../../';
-        
+
         // Set jade data
-        document.getElementById('jade-image').src = pathPrefix + jade.imageSrc;
-        document.getElementById('jade-avatar').src = pathPrefix + jade.imageSrc;
-        document.getElementById('jade-name').textContent = jade.name;
-        document.getElementById('jade-character').textContent = jade.character;
-        document.getElementById('jade-character-description').textContent = jade.characteristics;
+        const jadeImage = document.getElementById('jade-image');
+        if (jadeImage) {
+            jadeImage.src = pathPrefix + jade.imageSrc;
+        } else {
+            console.error("Error: jade-image element not found");
+        }
+        const jadeAvatar = document.getElementById('jade-avatar');
+        if (jadeAvatar) {
+            jadeAvatar.src = pathPrefix + jade.imageSrc;
+        } else {
+            console.error("Error: jade-avatar element not found");
+        }
+        const jadeName = document.getElementById('jade-name');
+        if (jadeName) {
+            jadeName.textContent = jade.name;
+        } else {
+            console.error("Error: jade-name element not found");
+        }
+        const jadeCharacter = document.getElementById('jade-character');
+        if (jadeCharacter) {
+            jadeCharacter.textContent = jade.character;
+        } else {
+            console.error("Error: jade-character element not found");
+        }
+        const jadeCharacterDescription = document.getElementById('jade-character-description');
+        if (jadeCharacterDescription) {
+            jadeCharacterDescription.textContent = jade.characteristics;
+        } else {
+            console.error("Error: jade-character-description element not found");
+        }
         systemPrompt = jade.prompt
 
         // Load prompt hints
