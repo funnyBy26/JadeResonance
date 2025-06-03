@@ -1,159 +1,119 @@
 const canvas = document.getElementById('jade-canvas');
 const ctx = canvas.getContext('2d');
+
 let width = window.innerWidth;
 let height = window.innerHeight;
 
-let dotsNum = 60; // 粒子数量
-let radius = 4; // 粒子半径（更小）
-let fillStyle = 'rgba(180,255,220,0.3)'; // 更高透明度
-let lineWidth = 1;
-let connection = 120; // 连线最大距离
-let followLength = 80; // 鼠标跟随距离
-
+let dotsNum = 2220;
+let radius = 1.8;
+let followLength = 80;
 let dots = [];
 let animationFrame = null;
 let mouseX = null;
 let mouseY = null;
 
-function addCanvasSize () {
+function resizeCanvas() {
   width = window.innerWidth;
   height = window.innerHeight;
   canvas.width = width;
   canvas.height = height;
-  ctx.clearRect(0, 0, width, height);
   dots = [];
-  if (animationFrame) window.cancelAnimationFrame(animationFrame);
+  if (animationFrame) cancelAnimationFrame(animationFrame);
   initDots(dotsNum);
-  moveDots();
+  animateDots();
 }
 
-function mouseMove (e) {
+function mouseMove(e) {
   mouseX = e.clientX;
   mouseY = e.clientY;
 }
 
-function mouseOut (e) {
+function mouseOut() {
   mouseX = null;
   mouseY = null;
 }
 
-function mouseClick () {
-  for (const dot of dots) dot.elastic();
+function mouseClick() {
+  for (const dot of dots) {
+    dot.elastic();
+  }
 }
 
 class Dot {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.speedX = (Math.random() * 2 - 1) * 0.3; // 适中初始速度
-    this.speedY = (Math.random() * 2 - 1) * 0.3;
-    this.follow = false;
+    this.r = radius + Math.random() * 1.2;
+    this.speedX = (Math.random() - 0.5) * 0.4;
+    this.speedY = (Math.random() - 0.5) * 0.4;
   }
-  draw () {
-    // 玉石渐变
-    let grad = ctx.createRadialGradient(this.x, this.y, radius * 0.3, this.x, this.y, radius);
-    grad.addColorStop(0, 'rgba(255,255,255,0.5)');
-    grad.addColorStop(0.5, fillStyle);
-    grad.addColorStop(1, 'rgba(100,180,140,0.2)');
+
+  draw() {
+    const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
+    grad.addColorStop(0, 'rgba(255,255,255,0.6)');
+    grad.addColorStop(0.5, 'rgba(200,255,240,0.4)');
+    grad.addColorStop(1, 'rgba(120,200,170,0.2)');
     ctx.beginPath();
-    ctx.arc(this.x, this.y, radius, 0, 2 * Math.PI);
+    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
     ctx.fillStyle = grad;
-    ctx.shadowColor = 'rgba(180,255,220,0.2)';
-    ctx.shadowBlur = 4;
+    ctx.shadowColor = 'rgba(160,255,220,0.3)';
+    ctx.shadowBlur = 6;
     ctx.fill();
     ctx.shadowBlur = 0;
-    ctx.closePath();
   }
-  move () {
-    if (this.x >= width || this.x <= 0) this.speedX = -this.speedX;
-    if (this.y >= height || this.y <= 0) this.speedY = -this.speedY;
+
+  move() {
     this.x += this.speedX;
     this.y += this.speedY;
-    // 不再有任何阻尼，粒子持续运动
-    this.correct();
-    this.connectMouse();
+    if (this.x <= 0 || this.x >= width) this.speedX = -this.speedX;
+    if (this.y <= 0 || this.y >= height) this.speedY = -this.speedY;
+    this.followMouse();
     this.draw();
   }
-  correct () {
-    if (!mouseX || !mouseY) return;
-    let lengthX = mouseX - this.x;
-    let lengthY = mouseY - this.y;
-    const distance = Math.sqrt(lengthX ** 2 + lengthY ** 2);
-    if (distance <= followLength) this.follow = true;
-    else if (this.follow === true && distance > followLength && distance <= followLength + 8) {
-      let proportion = followLength / distance;
-      lengthX *= proportion;
-      lengthY *= proportion;
-      this.x = mouseX - lengthX;
-      this.y = mouseY - lengthY;
-    } else this.follow = false;
-  }
-  connectMouse () {
-    if (mouseX && mouseY) {
-      let lengthX = mouseX - this.x;
-      let lengthY = mouseY - this.y;
-      const distance = Math.sqrt(lengthX ** 2 + lengthY ** 2);
-      if (distance <= connection) {
-        let opacity = (1 - distance / connection) * 0.2;
-        ctx.strokeStyle = `rgba(180,255,220,${opacity})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(mouseX, mouseY);
-        ctx.stroke();
-        ctx.closePath();
-      }
+
+  followMouse() {
+    if (mouseX === null || mouseY === null) return;
+    const dx = mouseX - this.x;
+    const dy = mouseY - this.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < followLength) {
+      const force = (1 - dist / followLength) * 0.05;
+      this.x += dx * force;
+      this.y += dy * force;
     }
   }
-  elastic () {
-    let lengthX = mouseX - this.x;
-    let lengthY = mouseY - this.y;
-    const distance = Math.sqrt(lengthX ** 2 + lengthY ** 2);
-    if (distance >= connection) return;
-    const rate = 1 - distance / connection;
-    this.speedX = 16 * rate * -lengthX / distance; // 弹射速度更快
-    this.speedY = 16 * rate * -lengthY / distance;
+
+  elastic() {
+    if (mouseX === null || mouseY === null) return;
+    const dx = mouseX - this.x;
+    const dy = mouseY - this.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < followLength) {
+      const rate = 1 - dist / followLength;
+      this.speedX = -dx / dist * 10 * rate;
+      this.speedY = -dy / dist * 10 * rate;
+    }
   }
 }
 
-function initDots (num) {
+function initDots(num) {
   for (let i = 0; i < num; i++) {
-    const x = Math.floor(Math.random() * width);
-    const y = Math.floor(Math.random() * height);
-    const dot = new Dot(x, y);
-    dot.draw();
-    dots.push(dot);
+    const x = Math.random() * width;
+    const y = Math.random() * height;
+    dots.push(new Dot(x, y));
   }
 }
 
-function moveDots () {
+function animateDots() {
   ctx.clearRect(0, 0, width, height);
   for (const dot of dots) {
     dot.move();
   }
-  for (let i = 0; i < dots.length; i++) {
-    for (let j = i; j < dots.length; j++) {
-      const distance = Math.sqrt((dots[i].x - dots[j].x) ** 2 + (dots[i].y - dots[j].y) ** 2);
-      if (distance <= connection) {
-        let opacity = (1 - distance / connection) * 0.12;
-        ctx.strokeStyle = `rgba(180,255,220,${opacity})`;
-        ctx.lineWidth = 0.7;
-        ctx.beginPath();
-        ctx.moveTo(dots[i].x, dots[i].y);
-        ctx.lineTo(dots[j].x, dots[j].y);
-        ctx.stroke();
-        ctx.closePath();
-      }
-    }
-  }
-  animationFrame = window.requestAnimationFrame(moveDots);
+  animationFrame = requestAnimationFrame(animateDots);
 }
 
-addCanvasSize();
-initDots(dotsNum);
-moveDots();
-
-document.onmousemove = mouseMove;
-document.onmouseout = mouseOut;
-document.onclick = mouseClick;
-window.onresize = addCanvasSize;
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+window.addEventListener('mousemove', mouseMove);
+window.addEventListener('mouseout', mouseOut);
+window.addEventListener('click', mouseClick);
