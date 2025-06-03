@@ -26,13 +26,44 @@ const additionalImages = [
     'assets/images/玉器工坊.png',
     'assets/images/玉石拟人.png',
     'assets/images/玉石展示.png',
+    'assets/images/background.png',
     'assets/images/background/bgForSelect.png',
     'assets/images/background/museum-bg.jpg',
-    'assets/images/background.jpg'
+    'assets/images/background.png'
+];
+
+const iconImages = [
+    'assets/icons/plant24.jpg',
+    'assets/icons/character14.jpg',
+    'assets/icons/mountain.jpg',
+    'assets/icons/玉字/甲骨文.jpg',
+    'assets/icons/玉字/楷书.jpg',
+    'assets/icons/玉字/隶书.jpg',
+    'assets/icons/玉字/瘦金.jpg',
+    'assets/icons/玉字/新石器.jpg',
+    'assets/icons/玉字/行书.jpg',
+    'assets/icons/玉字/篆书.jpg'
+];
+
+const jadeMuseumImages = [
+    'assets/jades/翠玉白菜.jpg',
+    'assets/jades/大禹治水图玉山.jpg',
+    'assets/jades/妇好墓玉凤.jpg',
+    'assets/jades/金缕玉衣.jpg',
+    'assets/jades/金托玉爵.jpg',
+    'assets/jades/晋侯墓组玉佩.jpg',
+    'assets/jades/青玉飞天佩.jpg',
+    'assets/jades/青玉云龙纹炉.jpg',
+    'assets/jades/神人兽面纹玉琮.jpg',
+    'assets/jades/宜子孙玉璧.jpg',
+    'assets/jades/玉孔雀衔花饰.jpg',
+    'assets/jades/玉梁金筐宝钿真珠装蹀躞带.jpg',
+    'assets/jades/子冈款青玉合卺杯.jpg',
+    'assets/jades/C形玉龙.jpg',
 ];
 
 // 合并所有需要缓存的图片资源
-const resourcesToCache = [...jadeDataImages, ...additionalImages];
+const resourcesToCache = [...jadeDataImages, ...additionalImages,...iconImages];
 
 self.addEventListener('install', event => {
     event.waitUntil(

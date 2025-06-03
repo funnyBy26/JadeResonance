@@ -21,7 +21,7 @@ body::before {
     left: 20px;
     width: 200px;
     height: 200px;
-    background-image: url('../../assets/icons/character14.png');
+    background-image: url('../assets/icons/character14.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -125,7 +125,7 @@ body::before:hover {
 #title-for-gallery{
     background: 
         linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
-        url('../../assets/icons/plant24.jpg');
+        url('../assets/icons/plant24.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: left bottom;
@@ -173,7 +173,7 @@ body::before:hover {
     bottom: 0.5%;
     width: 300px;
     height: 250px;
-    background-image: url('../../assets/icons/mountain.png');
+    background-image: url('../assets/icons/mountain.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: right bottom;
