@@ -7,37 +7,42 @@
     <link rel="stylesheet" href="../../css/common.css">
     <link rel="stylesheet" href="../../css/jade-dialog.css">
     <link rel="stylesheet" href="../../css/loading.css">
+    <link rel="stylesheet" href="../../css/buttons.css">
 </head>
 <body>
+
     <div id="loading-container" style="display:none;">
         <img id="loading-image" src="../../assets/images/loading.png" alt="Loading..." />
     </div>
-    <div class="topbar">
+    <div class="topbar hidden-before-load">
         <div class="topbar-logo">玉韵千年</div>
         <nav class="topbar-nav">
             <a href="../../index.html">首页</a>
+            <a href="../jade-select/index.html">玉石拟人</a>
+            <a href="../design-workshop/workshop.html">设计工坊</a>
+            <a href="../museum/dynasty.html">文物展示</a>
             <a href="../../about.html">关于我们</a>
-            <a href="https://github.com/funnyBy26/JadeResonance">联系我们</a>
         </nav>
     </div>
     <div class="container">
         <div class="jade-info">
-            <div class="jade-image-container">
-                <img id="jade-image" src="" alt="玉石图片">
-            </div>
-            <div class="jade-bottom-container">
-                <div class="jade-image-bottom">
-                    <div class="avatar-name-container">
-                        <img id="jade-avatar" src="" alt="玉石形象">
-                        <h2 id="jade-name"></h2>
-                    </div>
+            <div class="jade-content">
+                <a href="../jade-select/index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    返回上一页重新选择人物对话
+                </a>
+                <div class="jade-image-container">
+                    <img id="jade-image" src="" alt="玉石图片">
                 </div>
                 <div class="jade-character">
+                    <h2 id="jade-name"></h2>
                     <h2 id="jade-character"></h2>
                     <p id="jade-character-description"></p>
                 </div>
             </div>
         </div>
+        <img id="jade-avatar" src="" alt="玉石头像" style="display: none;">
+
 
         <div class="chat-container">
             <div class="chat-messages" id="chat-messages">
@@ -50,7 +55,7 @@
                 <div class="input-send-container">
                     <textarea id="message-input" placeholder="请清晰表达你的诉求，和玉石聊聊吧... (Shift + Enter 换行)"
                               onkeydown="handleKeyDown(event)"></textarea>
-                    <button id="send-button">发送</button>
+                    <button id="send-button" class="button _3">发送</button>
                 </div>
             </div>
         </div>
