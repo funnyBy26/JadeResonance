@@ -1,6 +1,6 @@
 /* 朝代陈列室样式 */
 body {
-    background-image: url('../assets/images/background/museum-bg.jpg');
+    background-image: url('https://jade-resonance.oss-cn-shanghai.aliyuncs.com/assets/images/background/museum-bg.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

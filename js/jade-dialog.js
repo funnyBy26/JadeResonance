@@ -31,7 +31,7 @@ async function loadJadeData(jadeId) {
         console.log("Jade data loaded:", jade); // 检查数据是否加载
 
         // 添加路径前缀
-        const pathPrefix = '../../';
+        const pathPrefix = 'https://jade-resonance.oss-cn-shanghai.aliyuncs.com/';
 
         // Set jade data
         const jadeImage = document.getElementById('jade-image');

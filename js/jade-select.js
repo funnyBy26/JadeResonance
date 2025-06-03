@@ -2,7 +2,7 @@
  * 玉石选择页面JavaScript
  */
 
-const PATH_PREFIX = '../../';
+const PATH_PREFIX = 'https://jade-resonance.oss-cn-shanghai.aliyuncs.com/';
 // 页面标题文本
 const titleText = "欢迎选择你想要对话的玉石，开始神奇的旅程";
 
@@ -29,7 +29,7 @@ onDocumentReady(() => {
 // Load jade data from JSON file
 async function loadJadeData() {
     try {
-        const response = await fetch(PATH_PREFIX + 'assets/jadeData.json');
+        const response = await fetch('../../assets/jadeData.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
