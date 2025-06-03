@@ -61,7 +61,7 @@ body{
 /* Left side: Jade Info */
 .jade-info {
     width: 35%;
-    height:100%;
+    height:85vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start; /* 顶部对齐 */
@@ -136,7 +136,7 @@ body{
     display: block !important; /* 强制显示 */
     text-align: center; /* 确保文字在容器内居中 */
     flex: 0 0 auto; 
-    margin-bottom: 10vh;
+
 }
 
 /* Right side: Chat Container */
