@@ -37,6 +37,12 @@ async function loadJadeData(jadeId) {
         const jadeImage = document.getElementById('jade-image');
         if (jadeImage) {
             jadeImage.src = pathPrefix + jade.imageSrc;
+            jadeImage.onload = () => {
+                console.log('Image loaded successfully');
+            };
+            jadeImage.onerror = () => {
+                console.error('Error loading image');
+            };
         } else {
             console.error("Error: jade-image element not found");
         }
@@ -264,7 +270,13 @@ function appendMessage(sender, message, isLoading = false) {
     messageElement.classList.add('message', sender);
 
     if (sender === 'ai') {
-        const avatarSrc = document.getElementById('jade-avatar').src;
+        const jadeAvatar = document.getElementById('jade-avatar');
+        let avatarSrc = '';
+        if (jadeAvatar) {
+            avatarSrc = jadeAvatar.src;
+        } else {
+            console.error("Error: jade-avatar element not found");
+        }
 
         // Create avatar element
         const avatarElement = document.createElement('div');

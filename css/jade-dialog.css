@@ -246,15 +246,3 @@ body{
     overflow: auto; /* Enable scrolling for content that exceeds the height */
     margin-right: 10px; /* Add spacing between input and button */
 }
-
-#send-button {
-    width: 13%; /* Adjust width to fill remaining space */
-    padding: 10px;
-    background-color: #12a817;
-    color: white;
-    border: none;
-    cursor: pointer;
-    height: fit-content; /* Adjust height to content */
-    flex-grow: 1; /* Make the button fill the remaining space */
-}
-
