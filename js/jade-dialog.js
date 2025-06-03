@@ -34,17 +34,18 @@ async function loadJadeData(jadeId) {
         const pathPrefix = 'https://jade-resonance.oss-cn-shanghai.aliyuncs.com/';
 
         // Set jade data
-        const jadeImage = document.getElementById('jade-image');
-        if (jadeImage) {
-            jadeImage.src = pathPrefix + jade.imageSrc;
-            jadeImage.onload = () => {
-                console.log('Image loaded successfully');
+        const jadeVideo = document.getElementById('jade-video');
+        if (jadeVideo) {
+            jadeVideo.src = pathPrefix + jade.videoSrc;
+            jadeVideo.load(); // Load the video
+            jadeVideo.onloadeddata = () => {
+                console.log('Video loaded successfully');
             };
-            jadeImage.onerror = () => {
-                console.error('Error loading image');
+            jadeVideo.onerror = () => {
+                console.error('Error loading video');
             };
         } else {
-            console.error("Error: jade-image element not found");
+            console.error("Error: jade-video element not found");
         }
         const jadeAvatar = document.getElementById('jade-avatar');
         if (jadeAvatar) {
