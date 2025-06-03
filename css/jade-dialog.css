@@ -1,5 +1,5 @@
 body{
-    background-image: url('../assets/images/background/bgForSelect.png');
+    background-image: url('https://jade-resonance.oss-cn-shanghai.aliyuncs.com/assets/images/background/bgForSelect.png');
     background-size: cover;
     background-repeat: no-repeat; /* Prevent the image from repeating */
     background-position: center;
@@ -241,20 +241,19 @@ body{
     width: 90%;
     padding: 10px;
     border: 1px solid #9d8e8e;
-    resize: none; /* Prevent manual resizing */
-    height: 80px; /* Set a fixed height */
-    overflow: auto; /* Enable scrolling for content that exceeds the height */
-    margin-right: 10px; /* Add spacing between input and button */
+    resize: none;
+    height: 80px; 
+    overflow: auto; 
+    margin-right: 10px; 
 }
 
 #send-button {
-    width: 13%; /* Adjust width to fill remaining space */
+    width: 13%; 
     padding: 10px;
-    background-color: #12a817;
+    background-color: #4dd752;
     color: white;
     border: none;
     cursor: pointer;
-    height: fit-content; /* Adjust height to content */
-    flex-grow: 1; /* Make the button fill the remaining space */
-}
-
+    height: fit-content;
+    flex-grow: 1; 
+} 

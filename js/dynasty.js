@@ -58,7 +58,7 @@ function createArtifactCard(artifact) {
     const card = document.createElement('div');
     card.className = 'artifact-card';
     card.innerHTML = `
-        <img src="../../assets/jades/${artifact.image}" alt="${artifact.name}" class="artifact-image">
+        <img src="https://jade-resonance.oss-cn-shanghai.aliyuncs.com/assets/jades/${artifact.image}" alt="${artifact.name}" class="artifact-image">
         <div class="artifact-info">
             <h3>${artifact.name}</h3>
             <div class="artifact-details">

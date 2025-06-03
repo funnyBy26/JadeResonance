@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="../../css/common.css">
     <link rel="stylesheet" href="../../css/jade-dialog.css">
     <link rel="stylesheet" href="../../css/loading.css">
+    <link rel="stylesheet" href="../../css/buttons.css">
 </head>
 <body>
+
     <div id="loading-container" style="display:none;">
-        <img id="loading-image" src="../../assets/images/loading.png" alt="Loading..." />
+        <img id="loading-image" src="https://jade-resonance.oss-cn-shanghai.aliyuncs.com/assets/images/loading.png" alt="Loading..." />
     </div>
     <div class="topbar hidden-before-load">
         <div class="topbar-logo">玉韵千年</div>
@@ -33,11 +35,14 @@
                     <img id="jade-image" src="" alt="玉石图片">
                 </div>
                 <div class="jade-character">
+                    <h2 id="jade-name"></h2>
                     <h2 id="jade-character"></h2>
                     <p id="jade-character-description"></p>
                 </div>
             </div>
         </div>
+        <img id="jade-avatar" src="" alt="玉石头像" style="display: none;">
+
 
         <div class="chat-container">
             <div class="chat-messages" id="chat-messages">
@@ -50,7 +55,9 @@
                 <div class="input-send-container">
                     <textarea id="message-input" placeholder="请清晰表达你的诉求，和玉石聊聊吧... (Shift + Enter 换行)"
                               onkeydown="handleKeyDown(event)"></textarea>
-                    <button id="send-button">发送</button>
+                    <div id="send-button" class="button _3"><span>发送</span>
+                        <div class="back"></div>
+                    </div>                
                 </div>
             </div>
         </div>

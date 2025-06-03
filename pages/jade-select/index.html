@@ -10,7 +10,7 @@
 </head>
 <body>
     <div id="loading-container" style="display:none;">
-        <img id="loading-image" src="../../assets/images/loading.png" alt="Loading..." />
+        <img id="loading-image" src="https://jade-resonance.oss-cn-shanghai.aliyuncs.com/assets/images/loading.png" alt="Loading..." />
     </div>
     <div class="topbar hidden-before-load">
         <div class="topbar-logo">玉韵千年</div>
@@ -111,5 +111,23 @@
     <script src="../../js/common.js"></script>
     <script src="../../js/jade-select.js"></script>
     <script src="../../js/loading.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered:', registration);
+                        // 监听 controllerchange 事件
+                        navigator.serviceWorker.addEventListener('controllerchange', () => {
+                            console.log('New service worker activated, reloading page');
+                            window.location.reload();
+                        });
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
