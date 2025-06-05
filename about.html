@@ -12,17 +12,19 @@
         <!-- 动态水墨山水背景 -->
     </div>
     <!-- 顶部导航栏 -->
-    <div class="topbar">
+    <div class="topbar hidden-before-load">
         <div class="topbar-logo">玉韵千年</div>
         <nav class="topbar-nav">
             <a href="index.html">首页</a>
+            <a href="pages/jade-select/index.html">玉石拟人</a>
+            <a href="pages/design-workshop/workshop.html">设计工坊</a>
+            <a href="pages/museum/museum.html">文物展示</a>
             <a href="about.html">关于我们</a>
-            <a href="pages/contact.html">联系我们</a>
         </nav>
     </div>
     
 
-    <div class="main-content" style="color: white;">
+    <div class="main-content hidden-before-load" style="color: white;">
         <div class="welcome-text">
             <h1>关于我们</h1>
             <p>我们是四个来自计算机学院热爱玉石的同学</p>
@@ -31,6 +33,25 @@
         
     </div>
 
-
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                // 先显示内容
+                document.querySelectorAll('.hidden-before-load').forEach(el => {
+                    el.classList.remove('hidden-before-load');
+                });
+                // main-content 整体淡入
+                document.querySelector('.main-content').classList.add('animate-in');
+                // topbar 淡入
+                document.querySelector('.topbar').classList.add('animate-in');
+                // 依次让子元素动画（如果有更多内容可继续加）
+                setTimeout(function() {
+                    document.querySelectorAll('.welcome-text').forEach(el => {
+                        el.classList.add('animate-in');
+                    });
+                }, 200);
+            }, 400); // 可根据需要调整延迟
+        });
+        </script>
 </body>
 </html>

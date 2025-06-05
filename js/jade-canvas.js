@@ -71,7 +71,6 @@ class Dot {
     this.y += this.speedY;
     // 不再有任何阻尼，粒子持续运动
     this.correct();
-    this.connectMouse();
     this.draw();
   }
   correct () {
@@ -89,21 +88,7 @@ class Dot {
     } else this.follow = false;
   }
   connectMouse () {
-    if (mouseX && mouseY) {
-      let lengthX = mouseX - this.x;
-      let lengthY = mouseY - this.y;
-      const distance = Math.sqrt(lengthX ** 2 + lengthY ** 2);
-      if (distance <= connection) {
-        let opacity = (1 - distance / connection) * 0.2;
-        ctx.strokeStyle = `rgba(180,255,220,${opacity})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(mouseX, mouseY);
-        ctx.stroke();
-        ctx.closePath();
-      }
-    }
+    // 已去除与鼠标的连线
   }
   elastic () {
     let lengthX = mouseX - this.x;
@@ -131,21 +116,7 @@ function moveDots () {
   for (const dot of dots) {
     dot.move();
   }
-  for (let i = 0; i < dots.length; i++) {
-    for (let j = i; j < dots.length; j++) {
-      const distance = Math.sqrt((dots[i].x - dots[j].x) ** 2 + (dots[i].y - dots[j].y) ** 2);
-      if (distance <= connection) {
-        let opacity = (1 - distance / connection) * 0.12;
-        ctx.strokeStyle = `rgba(180,255,220,${opacity})`;
-        ctx.lineWidth = 0.7;
-        ctx.beginPath();
-        ctx.moveTo(dots[i].x, dots[i].y);
-        ctx.lineTo(dots[j].x, dots[j].y);
-        ctx.stroke();
-        ctx.closePath();
-      }
-    }
-  }
+  // 已去除所有连线绘制
   animationFrame = window.requestAnimationFrame(moveDots);
 }
 

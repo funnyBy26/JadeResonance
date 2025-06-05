@@ -8,15 +8,16 @@ body {
 }
 
 .main-content {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    height: 100vh;
     width: 100%;
     position: relative;
     z-index: 2;
     padding: 0 3vw;
+    box-sizing: border-box;
     opacity: 0;
     transition: opacity 0.5s;
 }
@@ -30,7 +31,7 @@ body {
     position: fixed;
     width: 100%;
     height: 100%;
-    background: url('../assets/images/background.png') no-repeat center center;
+    background: url('https://jade-resonance.oss-cn-shanghai.aliyuncs.com/assets/images/background.png') no-repeat center center;
     background-size: cover;
     z-index: -1;
     animation: backgroundAnimation 20s infinite alternate;
@@ -65,12 +66,12 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px;
+    height: 3vw;
     background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 50px;
+    padding: 0 3vw;
     z-index: 100;
 }
 
@@ -93,18 +94,17 @@ body {
 }
 
 .topbar-nav a:hover {
-    color: #ffd700;
+    color: #7BC8A4;
 }
 
 .welcome-text {
-    margin-bottom: 1vw;
+    margin-top: 8vw;
     width: 100%;
     max-width: 800px;
     text-align: center;
-    position: static;
-    transform: none;
-    opacity: 0; /* 动画用 */
+    opacity: 0;
     color: white;
+    flex-shrink: 0;
 }
 
 .welcome-text h1 {
@@ -125,19 +125,19 @@ body {
     display: flex;
     gap: 2vw;
     justify-content: center;
-    position: static;
-    transform: none;
-    opacity: 0; /* 动画用 */
-    margin-top: 1vw;
+    align-items: stretch;
+    flex: 1 1 auto;
+    margin: 2vw 0;
+    min-height: 12vw;
 }
 
 .module-btn {
-    width: 15vw;
-    min-width: 18vw;
-    max-width: 28vw;
-    height: 22vw;
-    min-height: 18vw;
-    max-height: 36vw;
+    flex: 1 1 18vw;
+    min-width: 8vw;
+    max-width: 21vw;
+    max-height: 25vw;
+    height: auto;
+    aspect-ratio: 4/5;
     background: none;
     border: 4px solid rgba(255, 255, 255, 0.3);
     border-radius: 1vw;
@@ -146,6 +146,7 @@ body {
     overflow: hidden;
     position: relative;
     display: flex;
+    flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
     padding: 0;
@@ -153,8 +154,9 @@ body {
 
 .module-btn img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
+    flex: 1 1 auto;
     display: block;
 }
 
@@ -164,7 +166,7 @@ body {
     bottom: 0;
     width: 100%;
     padding: 1.2vw 0 0.8vw 0;
-    background: rgba(0,0,0,0); /* 默认无背景 */
+    background: rgba(0,0,0,0);
     color: #fff;
     font-size: 1.5vw;
     text-align: center;
@@ -179,7 +181,7 @@ body {
 }
 
 .module-btn:hover .module-btn-title {
-    background: rgba(0,0,0,0.45); /* 悬停时显示黑色背景 */
+    background: rgba(0,0,0,0.45);
 }
 
 .module-btn:hover {
@@ -189,14 +191,13 @@ body {
 }
 
 .story-guide {
-    position: absolute;
-    bottom: 10%;
     width: 100%;
     text-align: center;
     color: white;
     font-size: 1.2em;
+    margin-bottom: 2.7vw;
     opacity: 0;
-    transform: translateY(20px);
+    flex-shrink: 0;
 }
 
 @keyframes rotateJade {
@@ -226,8 +227,6 @@ body {
     opacity: 0;
     transform: translateY(20px);
 }
-
-
 
 @keyframes fadeIn {
     from {

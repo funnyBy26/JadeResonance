@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="loading-mask">
-        <img id="loading-img" src="assets/images/loading.png" alt="加载中">
+        <img id="loading-img" loading="lazy" src="https://jade-resonance.oss-cn-shanghai.aliyuncs.com/assets/images/loading.png" alt="加载中">
     </div>
     <canvas id="jade-canvas"></canvas>
     <div class="background">
@@ -20,8 +20,10 @@
         <div class="topbar-logo">玉韵千年</div>
         <nav class="topbar-nav">
             <a href="index.html">首页</a>
+            <a href="pages/jade-select/index.html">玉石拟人</a>
+            <a href="pages/design-workshop/workshop.html">设计工坊</a>
+            <a href="pages/museum/museum.html">文物展示</a>
             <a href="about.html">关于我们</a>
-            <a href="https://github.com/funnyBy26/JadeResonance">联系我们</a>
         </nav>
     </div>
 
@@ -33,15 +35,15 @@
 
         <div class="module-buttons">
             <a href="pages/jade-select/index.html" class="module-btn">
-                <img src="assets/images/玉石拟人.png" alt="玉石拟人">
+                <img src="https://jade-resonance.oss-cn-shanghai.aliyuncs.com/assets/images/玉石拟人.png" alt="玉石拟人">
                 <div class="module-btn-title">玉石拟人</div>
             </a>
             <a href="pages/design-workshop/workshop.html" class="module-btn">
-                <img src="assets/images/玉器工坊.png" alt="设计工坊">
+                <img src="https://jade-resonance.oss-cn-shanghai.aliyuncs.com/assets/images/玉器工坊.png" alt="设计工坊">
                 <div class="module-btn-title">设计工坊</div>
             </a>
             <a href="pages/museum/dynasty.html" class="module-btn">
-                <img src="assets/images/玉石展示.png" alt="文物展示">
+                <img src="https://jade-resonance.oss-cn-shanghai.aliyuncs.com/assets/images/玉石展示.png" alt="文物展示">
                 <div class="module-btn-title">文物展示</div>
             </a>
         </div>
@@ -52,28 +54,43 @@
     </div>
     
     <script src="../../js/common.js"></script>
-    <script src="../../js/main.js"></script>
     <script src="js/jade-canvas.js"></script>
     <script>
     window.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-            document.getElementById('loading-mask').style.opacity = '0';
+        // 检查 sessionStorage 是否有 visitedIndex 标记
+        if (!sessionStorage.getItem('visitedIndex')) {
+            // 第一次访问首页，显示 loading 动画
             setTimeout(function() {
-                document.getElementById('loading-mask').style.display = 'none';
-                // 先显示主页内容
-                document.querySelectorAll('.hidden-before-load').forEach(el => {
-                    el.classList.remove('hidden-before-load');
-                });
-                // 先让main-content整体淡入
-                document.querySelector('.main-content').classList.add('animate-in');
-                // 再依次让子元素动画
+                document.getElementById('loading-mask').style.opacity = '0';
                 setTimeout(function() {
-                    document.querySelectorAll('.topbar, .welcome-text, .module-buttons, .story-guide').forEach(el => {
-                        el.classList.add('animate-in');
+                    document.getElementById('loading-mask').style.display = 'none';
+                    // 显示主页内容
+                    document.querySelectorAll('.hidden-before-load').forEach(el => {
+                        el.classList.remove('hidden-before-load');
                     });
-                }, 200); // main-content淡入后再触发子动画
-            }, 400); // loading淡出动画时间
-        }, 1000); // 旋转+等待时间
+                    document.querySelector('.main-content').classList.add('animate-in');
+                    setTimeout(function() {
+                        document.querySelectorAll('.topbar, .welcome-text, .module-buttons, .story-guide').forEach(el => {
+                            el.classList.add('animate-in');
+                        });
+                    }, 200);
+                }, 400);
+            }, 1000);
+            // 设置已访问标记
+            sessionStorage.setItem('visitedIndex', 'true');
+        } else {
+            // 已访问过首页，直接显示内容，不显示 loading 动画
+            document.getElementById('loading-mask').style.display = 'none';
+            document.querySelectorAll('.hidden-before-load').forEach(el => {
+                el.classList.remove('hidden-before-load');
+            });
+            document.querySelector('.main-content').classList.add('animate-in');
+            setTimeout(function() {
+                document.querySelectorAll('.topbar, .welcome-text, .module-buttons, .story-guide').forEach(el => {
+                    el.classList.add('animate-in');
+                });
+            }, 200);
+        }
     });
     </script>
 </body>
