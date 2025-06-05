@@ -111,18 +111,16 @@ async function saveImage() {
     }
 
     try {
-        const response = await fetch(generatedImage.src);
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `玉器设计图_${new Date().getTime()}.png`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
+        // 直接使用图片的 URL 创建下载链接
+        const link = document.createElement('a');
+        link.href = generatedImage.src;
+        link.download = `玉器设计图_${new Date().getTime()}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
     } catch (error) {
-        console.error('保存图片时出错:', error);
-        alert('保存图片时出现错误，请稍后重试');
+        console.error('保存失败:', error);
+        alert('自动保存失败，请右键点击图片选择"另存为"进行手动保存');
     }
 }
