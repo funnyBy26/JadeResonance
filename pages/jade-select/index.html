@@ -10,14 +10,16 @@
 </head>
 <body>
     <div id="loading-container" style="display:none;">
-        <img id="loading-image" src="../../assets/images/loading.png" alt="Loading..." />
+        <img id="loading-image" src="https://jade-resonance.oss-cn-shanghai.aliyuncs.com/assets/images/loading.png" alt="Loading..." />
     </div>
-    <div class="topbar">
+    <div class="topbar hidden-before-load">
         <div class="topbar-logo">玉韵千年</div>
         <nav class="topbar-nav">
             <a href="../../index.html">首页</a>
+            <a href="../jade-select/index.html">玉石拟人</a>
+            <a href="../design-workshop/workshop.html">设计工坊</a>
+            <a href="../museum/museum.html">文物展示</a>
             <a href="../../about.html">关于我们</a>
-            <a href="https://github.com/funnyBy26/JadeResonance">联系我们</a>
         </nav>
     </div>
     <div class="title-container centered" id="titleContainer">
@@ -109,5 +111,23 @@
     <script src="../../js/common.js"></script>
     <script src="../../js/jade-select.js"></script>
     <script src="../../js/loading.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered:', registration);
+                        // 监听 controllerchange 事件
+                        navigator.serviceWorker.addEventListener('controllerchange', () => {
+                            console.log('New service worker activated, reloading page');
+                            window.location.reload();
+                        });
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>

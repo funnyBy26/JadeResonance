@@ -1,6 +1,6 @@
 /* 玉石选择页面样式 */
 body {
-    background-image: url('../assets/images/background/bgForSelect.png');
+    background-image: url('https://jade-resonance.oss-cn-shanghai.aliyuncs.com/assets/images/background/bgForSelect.png');
     background-size: cover;
     background-repeat: no-repeat; /* Prevent the image from repeating */
     background-position: center;
@@ -59,7 +59,7 @@ body::before {
 }
 
 .topbar-nav a:hover {
-    color: #ffd700;
+    color: #7BC8A4;
 }
 
 /* 标题容器和平移动画 */
